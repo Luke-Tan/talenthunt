@@ -1,9 +1,9 @@
 const fs = require('fs')
-const jobFile = process.argv[2];
-const candidateFile = process.argv[3];
+const inputFile = process.argv[2];
 
-let jobData = fs.readFileSync(jobFile, 'utf8').split('\r\n');
-let candidateData = fs.readFileSync(candidateFile, 'utf8').split('\r\n');
+let data = fs.readFileSync(inputFile, 'utf8').split('\n\n\n');
+let jobData = data[0].split('\n');
+let candidateData = data[1].split('\n');
 
 let jobRankings = {};
 let candidateRankings = {};
@@ -76,9 +76,7 @@ function findMatches(currMatches, step){
 		if(jobs.length > 1){
 			let winner;
 			let lowestIndex = Infinity;
-			console.log(candidateRankings)
 			let ranking = candidateRankings[candidate];
-			console.log(ranking)
 			for(let job of jobs){
 				let index = ranking.indexOf(job);
 				if(index < lowestIndex){
@@ -90,7 +88,6 @@ function findMatches(currMatches, step){
 			c2j[candidate].splice(c2j[candidate].indexOf(winner), 1)
 			// Assign all of the 'losers' to their next higher ranking candidate
 			c2j[candidate].forEach(loser=>{
-				console.log(loser);
 				currMatches[loser] = jobRankings[loser][step];
 			}) 
 		}
@@ -101,7 +98,7 @@ function findMatches(currMatches, step){
 const result = (invert(findMatches(seed(jobRankings), 1)))
 let output = ""
 for(let match in result){
-	const line = ${match} ${result[match]}\r\n
+	const line = `${match} ${result[match]}\n`
 	output += line
 }
 

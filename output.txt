@@ -1,0 +1,8 @@
+c1 j4
+c2 j8
+c3 j2
+c4 j1
+c5 j3
+c6 j6
+c7 j5
+c8 j7
